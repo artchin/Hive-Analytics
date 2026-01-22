@@ -15,14 +15,11 @@
 ## Структура
 
 ```
-├── task1_schema.sql           # DDL: 4 таблицы, партиционирование
-├── task2_daily_traffic.sql    # Посещения по дням
-├── task3_demographics.sql     # Демография по регионам (JOIN)
-├── task4_streaming.sql        # URL-трансформация (sed)
-├── task5_sampling.sql         # Исследование TABLESAMPLE
-├── run.sh                     # Запуск задач
-├── generate_sampling_chart.py # Генерация графика
-└── sampling_accuracy.png      # График точности sampling
+├── task1_schema.sql        # DDL: 4 таблицы, партиционирование
+├── task2_daily_traffic.sql # Посещения по дням
+├── task3_demographics.sql  # Демография по регионам (JOIN)
+├── task4_streaming.sql     # URL-трансформация (sed)
+└── task5_sampling.sql      # Исследование TABLESAMPLE
 ```
 
 ## Запуск
