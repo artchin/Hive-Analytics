@@ -57,4 +57,4 @@ hive -f task2_daily_traffic.sql
 |-------------|--------|
 | Партиционирование | Снижение scan на ~3х |
 | hive.exec.parallel | Параллельные стадии |
-| mapreduce.job.reduces=82 | Оптимально для объёма данных |
+| mapreduce.job.reduces=82 | Скорость обработки с часов до минут |
