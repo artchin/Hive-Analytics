@@ -2,7 +2,7 @@
 -- Task 4: Domain Migration (Hive Streaming)
 -- =============================================================================
 -- Business context:
---   In 2024, the media holding migrated regional news sites from country-specific
+--   In 2022, the media holding migrated regional news sites from country-specific
 --   domains (.ru, .ua, .by) to a unified .com domain for international audience.
 --   Historical logs need URL transformation to match current domain structure
 --   for consistent analytics and cross-period traffic comparison.
