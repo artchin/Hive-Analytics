@@ -28,8 +28,8 @@
 ## Запуск
 
 ```bash
-./run.sh        # все задачи
-./run.sh 3      # только task 3
+hive -f task1_schema.sql
+hive -f task2_daily_traffic.sql
 ```
 
 ## Ключевые решения
