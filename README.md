@@ -1,2 +1,66 @@
-# Hive-Analytics
-Hive analytics on user logs: RegexSerDe, partitioning, JOIN aggregations, Streaming transformations, sampling analysis. HiveQL
+# Hive Analytics
+
+Аналитика пользователей новостных порталов (~50M событий/день).
+
+## Stack
+
+| Технология | Версия | Назначение |
+|------------|--------|------------|
+| Apache Hive | 2.1.1 | SQL-движок над Hadoop |
+| Hadoop | 2.7.3 | Distributed storage (HDFS) |
+| MapReduce | 2.7 | Execution engine |
+| RegexSerDe | 2.1.1 | Парсинг сырых логов |
+| GNU sed | 4.2.2 | Streaming-трансформация |
+
+## Структура
+
+```
+├── task1_schema.sql           # DDL: 4 таблицы, партиционирование
+├── task2_daily_traffic.sql    # Посещения по дням
+├── task3_demographics.sql     # Демография по регионам (JOIN)
+├── task4_streaming.sql        # URL-трансформация (sed)
+├── task5_sampling.sql         # Исследование TABLESAMPLE
+├── run.sh                     # Запуск задач
+├── generate_sampling_chart.py # Генерация графика
+└── sampling_accuracy.png      # График точности sampling
+```
+
+## Запуск
+
+```bash
+./run.sh        # все задачи
+./run.sh 3      # только task 3
+```
+
+## Ключевые решения
+
+- **Партиционирование** по датам (116 партиций) — запросы по дню сканируют ~1% данных
+- **RegexSerDe** — парсинг логов без предобработки
+- **Hive Streaming** — трансформация через sed без написания UDF
+
+## Domain Migration (Task 4)
+
+В 2024 году медиахолдинг перенёс региональные новостные сайты с доменов .ru, .ua, .by на единый домен .com для выхода на международную аудиторию. Исторические логи требуют трансформации URL для корректного сравнения трафика между периодами и единообразной аналитики.
+
+## Sampling Accuracy (Task 5)
+
+![Sampling Accuracy](sampling_accuracy.png)
+
+График сгенерирован скриптом:
+```bash
+python3 generate_sampling_chart.py
+```
+
+| Размер выборки | Точность | Рекомендация |
+|----------------|----------|--------------|
+| 10 rows | ~52% | Только проверка синтаксиса |
+| 100 rows | ~89% | Минимум для аналитики |
+| 1000+ rows | >95% | Production adhoc-запросы |
+
+## Результаты
+
+| Оптимизация | Эффект |
+|-------------|--------|
+| Партиционирование | Снижение scan с 100% до ~1% |
+| hive.exec.parallel | Параллельные стадии |
+| mapreduce.job.reduces=82 | Оптимально для объёма данных |
