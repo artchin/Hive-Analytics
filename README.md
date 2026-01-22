@@ -18,7 +18,7 @@
 ├── task1_schema.sql        # DDL: 4 таблицы, партиционирование
 ├── task2_daily_traffic.sql # Посещения по дням
 ├── task3_demographics.sql  # Демография по регионам (JOIN)
-├── task4_streaming.sql     # URL-трансформация (sed)
+├── task4_streaming.sql     # URL-трансформация, Domain Migration*
 └── task5_sampling.sql      # Исследование TABLESAMPLE
 ```
 
@@ -35,18 +35,10 @@ hive -f task2_daily_traffic.sql
 - **RegexSerDe** — парсинг логов без предобработки
 - **Hive Streaming** — трансформация через sed без написания UDF
 
-## Domain Migration (Task 4)
+## Domain Migration
 
 В 2024 году медиахолдинг перенёс региональные новостные сайты с доменов .ru, .ua, .by на единый домен .com для выхода на международную аудиторию. Исторические логи требуют трансформации URL для корректного сравнения трафика между периодами и единообразной аналитики.
 
-## Sampling Accuracy (Task 5)
-
-![Sampling Accuracy](sampling_accuracy.png)
-
-График сгенерирован скриптом:
-```bash
-python3 generate_sampling_chart.py
-```
 
 | Размер выборки | Точность | Рекомендация |
 |----------------|----------|--------------|
